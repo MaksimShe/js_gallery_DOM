@@ -1,19 +1,20 @@
-/* eslint-disable function-paren-newline */
 'use strict';
 
-const deleteRedirect = document.querySelectorAll('.list-item__link');
-const arrLargePhoto = [...deleteRedirect].map((i) => i.href);
+const thumbs = document.querySelector('#thumbs');
+const mainImg = document.querySelector('#largeImg');
 
-deleteRedirect.forEach((i) => i.removeAttribute('href'));
+thumbs.addEventListener('click', (eventC) => {
+  eventC.preventDefault();
 
-const imgClick = document.querySelectorAll('.list-item');
+  const link = eventC.target.closest('.list-item__link');
 
-imgClick.forEach((item, index) =>
-  item.addEventListener('click', () => mainImg(item, index)),
-);
+  if (!link) {
+    return;
+  }
 
-function mainImg(item, index) {
-  const mainImgNow = document.querySelector('#largeImg');
+  const largeImgUrl = link.getAttribute('href');
+  const thumbImg = link.querySelector('img');
 
-  mainImgNow.setAttribute('src', arrLargePhoto[index]);
-}
+  mainImg.src = largeImgUrl;
+  mainImg.alt = thumbImg.alt || 'image';
+});
